@@ -5,13 +5,14 @@ import { AuthContext } from '../../providers/AuthProvider';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Swal from 'sweetalert2'
+import SocialLogin from '../../components/SocialLogin/SocialLogin';
 const LogIn = () => {
     // const captchaRef=useRef(null);
     const [disable,setDisable]=useState(true);
-    const {logIn,logInWithGoogle}=useContext(AuthContext);
+    const {logIn}=useContext(AuthContext);
     const location=useLocation();
     const navigate=useNavigate();
-    const from=location.state?.form?.pathname || "/";
+    const from=location.state?.from?.pathname || "/";
     const handleLogin=e=>{
         e.preventDefault();
         // console.log("login");
@@ -47,35 +48,35 @@ const LogIn = () => {
         })
 
     }
-    const handleLoginWithGoogle=()=>{
-        logInWithGoogle()
-        .then(result=>{
-            const user=result.user;
-            console.log(user);
-            Swal.fire({
-              title: "Login Successfully Done!!!",
-              showClass: {
-                popup: `
-                  animate__animated
-                  animate__fadeInUp
-                  animate__faster
-                `
-              },
-              hideClass: {
-                popup: `
-                  animate__animated
-                  animate__fadeOutDown
-                  animate__faster
-                `
-              }
-            });
-            navigate(from,{replace:true});
-        }
-        )
-        .catch(error=>{
-            console.log(error);
-        })
-    }
+    // const handleLoginWithGoogle=()=>{
+    //     logInWithGoogle()
+    //     .then(result=>{
+    //         const user=result.user;
+    //         console.log(user);
+    //         Swal.fire({
+    //           title: "Login Successfully Done!!!",
+    //           showClass: {
+    //             popup: `
+    //               animate__animated
+    //               animate__fadeInUp
+    //               animate__faster
+    //             `
+    //           },
+    //           hideClass: {
+    //             popup: `
+    //               animate__animated
+    //               animate__fadeOutDown
+    //               animate__faster
+    //             `
+    //           }
+    //         });
+    //         navigate(from,{replace:true});
+    //     }
+    //     )
+    //     .catch(error=>{
+    //         console.log(error);
+    //     })
+    // }
     useEffect(()=>{
         loadCaptchaEnginge(7);
     },[])
@@ -152,10 +153,11 @@ const LogIn = () => {
             <p>New here?Please go to the
                 <Link to="/signUp" className="text-blue-500"> Sign In</Link> page
             </p>
-            <button
+            {/* <button
             className="btn btn-primary mt-2"
             onClick={handleLoginWithGoogle}
-            >LogIn With Google</button>
+            >LogIn With Google</button> */}
+            <SocialLogin/>
         </div>
 
       </form>

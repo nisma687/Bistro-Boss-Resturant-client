@@ -4,6 +4,10 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
+// import useAxiosSecure from "../../hooks/useAxiosSecure";
+// import axios from "axios";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 
 const SignUp = () => {
@@ -14,32 +18,49 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
   const { createUser,updateUserProfile } = useContext(AuthContext);
+  const axiosSecurePublic=useAxiosPublic();
   const navigate=useNavigate();
   const onSubmit = (data) => {
-                console.log(data);
+                // console.log(data);
                 const email=data.email;
                 const password=data.password;
                 const name=data.name;
                 const photoUrl=data.photoUrl;
-                createUser(email,password)
+              createUser(email,password)
                 .then(result=>{
                     const user=result.user;
                     console.log(user);
                     // alert("User Created Successfully");
-                    updateUserProfile(name,photoUrl)
+                   updateUserProfile(name,photoUrl)
                     .then(result=>{
                       console.log(result);
-                      reset();
-                      Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "User Created Successfully",
-                        showConfirmButton: false,
-                        timer: 1500
-                      });
-                      navigate("/");
+                      // set user in the database
+                      const userinfo={
+                        name:name,
+                        email:email,
+                        photoUrl:photoUrl
+                 
+                      }
+                    axiosSecurePublic.post("/users",userinfo)
+                      .then(res=>{
+                        console.log(res);
+                        if(res.data.insertedId){
+                          reset();
+                          Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "User Created Successfully",
+                            showConfirmButton: false,
+                            timer: 1500
+                          });
+                          navigate("/");
+                        }
+                       
                     })
-                    .catch(error=>{
+                      
+                     
+                   })
+                  .catch(error=>{
                       console.log(error);
                     })
                 })
@@ -150,11 +171,12 @@ const SignUp = () => {
              
             </div>
           </form>
-          <div className="mt-2 mb-2">
-            <p>New here?Please go to the
+          <div className="mt-2 mb-2 mr-5">
+            <p className="mr-4">New here?Please go to the
                 <Link to="/logIn" className="text-blue-500">Login</Link> page
             </p>
         </div>
+        <SocialLogin/>
         </div>
       </div>
     </div>
