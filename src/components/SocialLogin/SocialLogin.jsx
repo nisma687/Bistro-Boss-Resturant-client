@@ -18,13 +18,13 @@ const SocialLogin = () => {
             const user=result.user;
             console.log(user);
             const userInfo={
-                email:user.email,
-                name:user.displayName,
-                photoUrl:user.photoURL,
+                email:user?.email,
+                name:user?.displayName,
+                photoUrl:user?.photoURL,
             }
             axiosPublic.post("/users",userInfo)
             .then(res=>{
-                console.log(res);
+                console.log(res.data);
                 Swal.fire({
                     title: "Login Successfully Done!!!",
                     showClass: {

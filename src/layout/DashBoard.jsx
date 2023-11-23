@@ -1,19 +1,70 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { FaCalendarAlt, FaSearch } from "react-icons/fa";
-
+import { PiForkKnifeFill } from "react-icons/pi";
 import { IoHome } from "react-icons/io5";
 import { FaMoneyCheck } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
 import { TbBrandBooking } from "react-icons/tb";
 import { MdOutlineRateReview } from "react-icons/md";
+import { IoIosContacts } from "react-icons/io";
 const DashBoard = () => {
+   // get admin value from database
+   const isAdmin=true;
         return (
             <div className="flex">
                 {/* side bar */}
             <div className="w-64 p-4  
                 min-h-screen bg-orange-500">
             <ul className="menu mt-12">
+             {
+               isAdmin? <>
+                <li>
+
+                 <NavLink
+                    to="/dashboard/adminHome"
+                 className="uppercase"
+                  >
+                    <IoHome />
+                   Admin Home</NavLink>
+              </li>
               <li>
+                 <NavLink 
+                    to="/dashboard/addItems"
+                 className="uppercase" >
+                 <PiForkKnifeFill />
+                  Add Items
+                </NavLink>
+              </li>
+              <li>
+                 <NavLink 
+                    to="/dashboard/manageItems"
+                 className="uppercase">
+                 <FaMoneyCheck/>
+                    Manage Items</NavLink>
+              </li>
+              <li>
+                 <NavLink to="/dashboard/manageBookings"className="uppercase">
+                    <FaShoppingCart/>
+                    Manage Bookings</NavLink>
+              </li>
+              <li>
+                 <NavLink 
+                 to="/dashboard/users"
+                 className="uppercase" >
+                    <MdOutlineRateReview/>
+                    All Users</NavLink>
+              </li>
+              <li>
+                 <NavLink 
+                    to="/dashboard/bookings"
+                 className="uppercase" >
+                    <TbBrandBooking/>
+                    MY BOOKING</NavLink>
+              </li>
+
+               </>:
+               <>
+                <li>
 
                  <NavLink
                     to="/dashboard/userHome"
@@ -56,6 +107,9 @@ const DashBoard = () => {
                     <TbBrandBooking/>
                     MY BOOKING</NavLink>
               </li>
+               </>
+             }
+              {/* shared content */}
               <div className="divider"></div>
               <li>
                  <NavLink
@@ -80,6 +134,15 @@ const DashBoard = () => {
                   >
                    <FaShoppingCart/>
                   Order</NavLink>
+              </li>
+              <li>
+                 <NavLink
+                    to="/order/contact"
+                 className="uppercase"
+                  >
+                     <IoIosContacts/>
+                   Contact
+                  </NavLink>
               </li>
             </ul>
             </div>
