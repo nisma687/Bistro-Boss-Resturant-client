@@ -9,12 +9,34 @@ const AllUsers = () => {
     const {data:users=[],refetch}=useQuery({
         queryKey: ['users'],
         queryFn:async()=>{
-            const res=await axiosSecure.get('/users');
+            const res=await axiosSecure.get('/users'
+            // as we used interceptors in useAxiosSecure.jsx so we don't need to pass token here
+            // ,{
+            //   headers:{
+            //     authorization:`Bearer ${localStorage.getItem('access-token')}`
+            //   }
+            // }
+            );
             return res.data;
         }
     }) ;
     const handleMakeAdmin=(id)=>{
         console.log(id);
+        axiosSecure.patch(`/users/admin/${id}`)
+        .then(res=>{
+            console.log(res.data);
+            if(res.data.modifiedCount>0){
+                Swal.fire({
+                    title: "Success!",
+                    text:`user is now admin.`,
+                    icon: "success"
+                  });
+                  refetch();
+            }
+            
+            
+
+        })
     
     }
     const handleDeleteUsers=(id)=>{
@@ -78,11 +100,11 @@ const AllUsers = () => {
             <td>{user.name}</td>
             <td>{user.email}</td>
             <td>
-            <button
+           {user.role==='admin'? 'Admin': <button
                 onClick={()=>handleMakeAdmin(user._id)}
                className="btn btn-ghost bg-yellow-800"
               ><FaUserEdit className="text-white" />
-              </button>
+              </button>}
             </td>
             <td>
             <button

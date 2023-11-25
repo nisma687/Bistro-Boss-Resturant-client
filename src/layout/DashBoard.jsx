@@ -7,9 +7,11 @@ import { FaShoppingCart } from "react-icons/fa";
 import { TbBrandBooking } from "react-icons/tb";
 import { MdOutlineRateReview } from "react-icons/md";
 import { IoIosContacts } from "react-icons/io";
+import useAdmin from "../hooks/useAdmin";
 const DashBoard = () => {
    // get admin value from database
-   const isAdmin=true;
+   const [isAdmin]=useAdmin();
+   console.log(isAdmin);
         return (
             <div className="flex">
                 {/* side bar */}
