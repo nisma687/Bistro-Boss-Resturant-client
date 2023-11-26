@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useCard from "../../../hooks/useCard";
 import { RiDeleteBin6Fill } from "react-icons/ri";
@@ -49,10 +50,12 @@ const Cart = () => {
     }
     return (
         <div>
-            <div className="m-4 grid grid-cols-3 gap-4">
+            <div className="m-4 grid grid-cols-3 gap-5">
             <h2 className="text-3xl ">Items:{cart?.length}</h2>
             <h2 className="text-3xl">Total Price:{totalPrice}</h2>
-            <button className="btn btn-primary w-1/2">Pay</button>
+           {cart.length? <Link to="/dashboard/payment">
+            <button  className="btn btn-primary w-1/2">Pay</button>
+            </Link>:<button disabled className="btn btn-primary w-1/2">Pay</button>}
             </div>
 
             <div className="overflow-x-auto">

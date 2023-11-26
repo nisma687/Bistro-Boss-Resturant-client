@@ -1,9 +1,59 @@
+import Swal from "sweetalert2";
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import useMenu from "../../../hooks/useMenu";
-
+import {FaUserEdit} from "react-icons/fa";
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
+// import useAxiosPublic from "../../../hooks/useAxiosPublic";
 const ManageItems = () => {
-    const [menu]=useMenu();
+  const axiosSecure=useAxiosSecure();
+  const [menu,loading,refetch]=useMenu();
+
+  const handleEditItem=(id)=>{
+    console.log(id);
+    
+
+  }
+  const handleDeleteItem=(id)=>{
+    console.log(id);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+          axiosSecure.delete(`/menu/${id}`)
+          .then(res=>{
+              console.log(res.data);
+              if(res.data.deletedCount>0){
+                refetch();
+                  Swal.fire({
+                      title: "Deleted!",
+                      text: "Your file has been deleted.",
+                      icon: "success"
+                    });
+                   
+              }
+              
+              
+  
+          })
+          .catch(err=>console.log(err));
+        
+        
+      }
+    });
+     
+        
+        
+  }
+    
     return (
         <div>
             <SectionTitle
@@ -51,11 +101,17 @@ const ManageItems = () => {
             </td>
             <td>{item.price}</td>
             <th>
-              <button className="btn btn-ghost btn-xs">details</button>
+            <Link to={`/dashboard/updateItem/${item._id}`}>
+            <button
+               onClick={()=>handleEditItem(item._id)}
+               className="btn btn-ghost bg-yellow-800"
+              ><FaUserEdit className="text-white" />
+              </button>
+            </Link>
             </th>
             <th>
             <button
-            
+              onClick={()=>handleDeleteItem(item._id)}
                className="btn btn-ghost bg-red-800"
               ><RiDeleteBin6Fill className="text-white" />
               </button>
