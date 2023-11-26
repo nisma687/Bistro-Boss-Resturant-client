@@ -88,7 +88,8 @@ const DashBoard = () => {
                     to="/dashboard/payment"
                  className="uppercase">
                  <FaMoneyCheck/>
-                    Payment History</NavLink>
+                    Payment
+                    </NavLink>
               </li>
               <li>
                  <NavLink to="/dashboard/cart"className="uppercase">
@@ -104,10 +105,10 @@ const DashBoard = () => {
               </li>
               <li>
                  <NavLink 
-                    to="/dashboard/bookings"
+                    to="/dashboard/paymentHistory"
                  className="uppercase" >
                     <TbBrandBooking/>
-                    MY BOOKING</NavLink>
+                    Payment history</NavLink>
               </li>
                </>
              }
