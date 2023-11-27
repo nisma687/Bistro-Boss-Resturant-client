@@ -10,7 +10,7 @@ const useMenu = () => {
     // jokhn intially hit korbe data or load korbe tokhn loading true hobe
     // const [loading,setLoading]=useState(true);
     // useEffect(()=>{
-    //     fetch('http://localhost:5000/menu')
+    //     fetch('https://bistro-boss-resturant-server-khaki.vercel.app/menu')
     //     .then(res=>res.json())
     //     .then(data=>{
     //         setMenu(data);

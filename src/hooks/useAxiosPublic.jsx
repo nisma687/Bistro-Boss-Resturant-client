@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const axiosSecurePublic=axios.create({
-    baseURL:"http://localhost:5000",
+    baseURL:"https://bistro-boss-resturant-server-khaki.vercel.app",
 
 
 });
